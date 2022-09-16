@@ -21,6 +21,7 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
     var captureDevices: AVCaptureDevice?
 
     @IBOutlet var cropMaskView: UIView?
+    @IBOutlet var permissionView: UIView?
     @IBOutlet var contentView: UIView?
     @IBOutlet var flashlight: UIButton!
     var previewLayer: CALayer?
@@ -105,12 +106,14 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
      * 开始扫描
      */
     func start() {
-        if !session.isRunning && checkPermission() {
+        let permission = checkPermission()
+        if !session.isRunning && permission {
             DispatchQueue.global().async { [self] in
                 self.session.startRunning()
             }
             scanWindow.startScanAnimation()
         }
+        permissionView?.isHidden = permission
     }
 
     /**
@@ -144,90 +147,100 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
         return false
     }
 
+    fileprivate func setupFlashlightButton(_ crop: UIView, _ container: UIView) {
+        let frame = crop.bounds
+        let width = {
+            let fw = (frame.width * 0.4)
+            let fh = (frame.height * 0.4)
+            var width = fw
+            if fw < fh {
+                width = fh
+            }
+            if width > 120 {
+                width = 120
+            } else if width < 40 {
+                width = 40
+            }
+            return width
+        }()
+        if flashlight == nil {
+            let button = UIButton(type: .custom)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.backgroundColor = UIColor.clear
+            let config = UIImage.SymbolConfiguration(pointSize: 36)
+            button.setImage(UIImage(systemName: "flashlight.off.fill")?.applyingSymbolConfiguration(config), for: UIControl.State.normal)
+            button.setImage(UIImage(systemName: "flashlight.on.fill")?.applyingSymbolConfiguration(config), for: UIControl.State.selected)
+            button.isSelected = false
+            button.addTarget(self, action: #selector(flashlightStatueChagne), for: UIControl.Event.touchUpInside)
+            container.addSubview(button)
+            NSLayoutConstraint.activate([
+                button.centerXAnchor.constraint(equalTo: crop.centerXAnchor),
+                button.centerYAnchor.constraint(equalTo: crop.centerYAnchor),
+                button.widthAnchor.constraint(equalToConstant: width),
+                button.heightAnchor.constraint(equalToConstant: width),
+            ])
+            flashlight = button
+        }
+        flashlight.isHidden = true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         scanWindow.setNeedsLayout()
         // 获取摄像设备
         // 创建输入流
         if let crop = cropMaskView,
-           let container = contentView ?? crop.superview ?? view,
-           let devices = AVCaptureDevice.default(for: AVMediaType.video),
-           let input = try? AVCaptureDeviceInput(device: devices) {
-            captureDevices = devices
-            let output = AVCaptureMetadataOutput()
-            output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            output.rectOfInterest = getScanCrop(rect: crop.frame, readerViewBounds: container.frame)
-            let dataOutput = AVCaptureVideoDataOutput()
-            dataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.main)
-            session.canSetSessionPreset(AVCaptureSession.Preset.high)
-            session.addInput(input)
-            session.addOutput(output)
-            session.addOutput(dataOutput)
-            
-            let availableMetadataObjectTypes = output.availableMetadataObjectTypes
-            let filterTypes = [AVMetadataObject.ObjectType.aztec,
-                               AVMetadataObject.ObjectType.codabar,
-                               AVMetadataObject.ObjectType.code128,
-                               AVMetadataObject.ObjectType.code39,
-                               AVMetadataObject.ObjectType.code39Mod43,
-                               AVMetadataObject.ObjectType.code93,
-                               AVMetadataObject.ObjectType.dataMatrix,
-                               AVMetadataObject.ObjectType.ean13,
-                               AVMetadataObject.ObjectType.ean8,
-                               AVMetadataObject.ObjectType.gs1DataBar,
-                               AVMetadataObject.ObjectType.gs1DataBarExpanded,
-                               AVMetadataObject.ObjectType.gs1DataBarLimited,
-                               AVMetadataObject.ObjectType.interleaved2of5,
-                               AVMetadataObject.ObjectType.itf14,
-                               AVMetadataObject.ObjectType.microPDF417,
-                               AVMetadataObject.ObjectType.microQR,
-                               AVMetadataObject.ObjectType.pdf417,
-                               AVMetadataObject.ObjectType.qr].filter({ type in
-                availableMetadataObjectTypes.contains(type)
-            })
-            output.metadataObjectTypes = filterTypes
-            
-            let layer = AVCaptureVideoPreviewLayer(session: session)
-            layer.videoGravity = .resizeAspectFill
-            layer.frame = container.bounds
+           let container = contentView ?? crop.superview ?? view {
+            if let devices = AVCaptureDevice.default(for: AVMediaType.video),
+               let input = try? AVCaptureDeviceInput(device: devices) {
+                captureDevices = devices
+                let output = AVCaptureMetadataOutput()
+                output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+                output.rectOfInterest = getScanCrop(rect: crop.frame, readerViewBounds: container.frame)
+                let dataOutput = AVCaptureVideoDataOutput()
+                dataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.main)
+                session.canSetSessionPreset(AVCaptureSession.Preset.high)
+                session.addInput(input)
+                session.addOutput(output)
+                session.addOutput(dataOutput)
 
-            container.layer.insertSublayer(layer, at: 0)
-            previewLayer = layer
-            metadaOutput = output
-            let frame = crop.bounds
-            let width = {
-                let fw = (frame.width * 0.4)
-                let fh = (frame.height * 0.4)
-                var width = fw
-                if fw < fh {
-                    width = fh
+                let availableMetadataObjectTypes = output.availableMetadataObjectTypes
+                var filterTypes = [AVMetadataObject.ObjectType.aztec,
+                                   AVMetadataObject.ObjectType.code128,
+                                   AVMetadataObject.ObjectType.code39,
+                                   AVMetadataObject.ObjectType.code39Mod43,
+                                   AVMetadataObject.ObjectType.code93,
+                                   AVMetadataObject.ObjectType.dataMatrix,
+                                   AVMetadataObject.ObjectType.ean13,
+                                   AVMetadataObject.ObjectType.ean8,
+                                   AVMetadataObject.ObjectType.interleaved2of5,
+                                   AVMetadataObject.ObjectType.itf14,
+                                   AVMetadataObject.ObjectType.pdf417,
+                                   AVMetadataObject.ObjectType.qr].filter({ type in
+                    availableMetadataObjectTypes.contains(type)
+                })
+                if #available(iOS 15.4, *) {
+                    filterTypes.append(contentsOf: [AVMetadataObject.ObjectType.codabar,
+                                                    AVMetadataObject.ObjectType.gs1DataBar,
+                                                    AVMetadataObject.ObjectType.gs1DataBarExpanded,
+                                                    AVMetadataObject.ObjectType.gs1DataBarLimited,
+                                                    AVMetadataObject.ObjectType.microPDF417,
+                                                    AVMetadataObject.ObjectType.microQR].filter({ type in
+                            availableMetadataObjectTypes.contains(type)
+                        }))
                 }
-                if width > 120 {
-                    width = 120
-                } else if width < 40 {
-                    width = 40
-                }
-                return width
-            }()
-            if flashlight == nil {
-                let button = UIButton(type: .custom)
-                button.translatesAutoresizingMaskIntoConstraints = false
-                button.backgroundColor = UIColor.clear
-                let config = UIImage.SymbolConfiguration(pointSize: 36)
-                button.setImage(UIImage(systemName: "flashlight.off.fill")?.applyingSymbolConfiguration(config), for: UIControl.State.normal)
-                button.setImage(UIImage(systemName: "flashlight.on.fill")?.applyingSymbolConfiguration(config), for: UIControl.State.selected)
-                button.isSelected = false
-                button.addTarget(self, action: #selector(flashlightStatueChagne), for: UIControl.Event.touchUpInside)
-                container.addSubview(button)
-                NSLayoutConstraint.activate([
-                    button.centerXAnchor.constraint(equalTo: crop.centerXAnchor),
-                    button.centerYAnchor.constraint(equalTo: crop.centerYAnchor),
-                    button.widthAnchor.constraint(equalToConstant: width),
-                    button.heightAnchor.constraint(equalToConstant: width),
-                ])
-                flashlight = button
+                output.metadataObjectTypes = filterTypes
+
+                let layer = AVCaptureVideoPreviewLayer(session: session)
+                layer.videoGravity = .resizeAspectFill
+                layer.frame = container.bounds
+
+                container.layer.insertSublayer(layer, at: 0)
+                previewLayer = layer
+                metadaOutput = output
+                setupFlashlightButton(crop, container)
             }
-            flashlight.isHidden = true
+            updateScaner()
         }
     }
 
@@ -242,7 +255,6 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
            captureDevices.hasFlash {
             do {
                 try! captureDevices.lockForConfiguration()
-
                 if isOn {
                     captureDevices.torchMode = .on
                     captureDevices.flashMode = .on
@@ -281,17 +293,28 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        self.cropMaskView?.setNeedsLayout()
+        self.cropMaskView?.superview?.layoutIfNeeded()
+        updateScaner()
+    }
+
+    override func viewLayoutMarginsDidChange() {
+        super.viewLayoutMarginsDidChange()
+        
+    }
+
+    func updateScaner(callerLine: Int = #line) {
         if let container = (contentView ?? cropMaskView?.superview ?? view) {
             previewLayer?.frame = container.bounds
             let crop = cropMaskView!.frame
             let scanCrop = getScanCrop(rect: crop, readerViewBounds: container.frame)
             metadaOutput?.rectOfInterest = scanCrop
             scanWindow.excludePath = crop
+            print(">\(callerLine) frame:\(container.bounds) crop:\(crop) scancrop:\(scanCrop)")
         }
     }
 
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        
         print("扫描到:\(metadataObjects)")
         var results: [AVMetadataMachineReadableCodeObject] = []
         for obj in metadataObjects {

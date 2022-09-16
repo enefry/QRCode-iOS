@@ -68,6 +68,12 @@ class MainViewController: QRCodeScannerViewController, PHPickerViewControllerDel
         }
     }
 
+    @IBAction func jumpCameraSettings() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
+        }
+    }
+
     @IBAction func onActionExport(_ sender: UIButton) {
         if text.lengthOfBytes(using: String.Encoding.utf8) > 0 {
             let activity = UIActivityViewController(activityItems: [text], applicationActivities: nil)
@@ -80,9 +86,8 @@ class MainViewController: QRCodeScannerViewController, PHPickerViewControllerDel
     }
 
     @IBAction func onActionOpenHistory(_ sender: UIButton) {
-        // TODO:
         if let vc = storyboard?.instantiateViewController(withIdentifier: "HistoryViewController") {
-            present(vc, animated: true)
+            present(UINavigationController(rootViewController: vc), animated: true)
         }
     }
 
@@ -129,8 +134,8 @@ class MainViewController: QRCodeScannerViewController, PHPickerViewControllerDel
                     })
                     qrCodeResults.append(qrcode)
                 }
-                hideLoading()
             }
+            hideLoading()
             self.text = String(qrCodeResults.joined(separator: "\n=============\n"))
         }
         picker.dismiss(animated: true)

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21503.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21501.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -79,10 +80,70 @@
                                             <constraint firstAttribute="width" secondItem="WND-B2-APX" secondAttribute="height" id="Ji6-g9-dJd"/>
                                         </constraints>
                                     </view>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vJY-4j-IgL">
+                                        <rect key="frame" x="87" y="190.66666666666663" width="200" height="200"/>
+                                        <subviews>
+                                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5g5-Ix-JfT">
+                                                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="YGZ-gc-59i">
+                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </view>
+                                                <blurEffect style="regular"/>
+                                            </visualEffectView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="aSY-p1-fkr">
+                                                <rect key="frame" x="0.0" y="1" width="200" height="197.66666666666666"/>
+                                            </imageView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="wYY-2M-Nqx">
+                                                <rect key="frame" x="0.0" y="2.6666666666666572" width="200" height="195"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Permission Denied" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a4Y-C8-gwt">
+                                                <rect key="frame" x="29.333333333333329" y="179.66666666666666" width="141.66666666666669" height="20.333333333333343"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jAn-sy-hmN">
+                                                <rect key="frame" x="173" y="177.66666666666666" width="24" height="24"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="24" id="AyG-ju-Vud"/>
+                                                    <constraint firstAttribute="height" constant="24" id="Fbj-8c-GHd"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="chevron.forward" catalog="system"/>
+                                                <connections>
+                                                    <action selector="jumpCameraSettings" destination="BYZ-38-t0r" eventType="touchUpInside" id="fS2-dB-jqd"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="aSY-p1-fkr" firstAttribute="top" secondItem="vJY-4j-IgL" secondAttribute="top" id="4dV-zu-TjT"/>
+                                            <constraint firstAttribute="bottom" secondItem="wYY-2M-Nqx" secondAttribute="bottom" id="7Vq-am-ysM"/>
+                                            <constraint firstAttribute="bottom" secondItem="aSY-p1-fkr" secondAttribute="bottom" id="Gya-he-UAE"/>
+                                            <constraint firstItem="jAn-sy-hmN" firstAttribute="leading" secondItem="a4Y-C8-gwt" secondAttribute="trailing" constant="2" id="I6l-fH-cXf"/>
+                                            <constraint firstAttribute="bottom" secondItem="5g5-Ix-JfT" secondAttribute="bottom" id="KXv-i8-vjd"/>
+                                            <constraint firstAttribute="trailing" secondItem="5g5-Ix-JfT" secondAttribute="trailing" id="KfA-as-r5o"/>
+                                            <constraint firstItem="aSY-p1-fkr" firstAttribute="leading" secondItem="vJY-4j-IgL" secondAttribute="leading" id="MOt-gr-1kc"/>
+                                            <constraint firstAttribute="trailing" secondItem="aSY-p1-fkr" secondAttribute="trailing" id="O1a-E7-1uP"/>
+                                            <constraint firstItem="jAn-sy-hmN" firstAttribute="centerY" secondItem="a4Y-C8-gwt" secondAttribute="centerY" id="TZk-62-Txq"/>
+                                            <constraint firstItem="wYY-2M-Nqx" firstAttribute="leading" secondItem="vJY-4j-IgL" secondAttribute="leading" id="TeH-GR-gvD"/>
+                                            <constraint firstItem="5g5-Ix-JfT" firstAttribute="leading" secondItem="vJY-4j-IgL" secondAttribute="leading" id="Vak-ds-dgb"/>
+                                            <constraint firstAttribute="width" constant="200" id="YdV-Yt-OOv"/>
+                                            <constraint firstAttribute="trailing" secondItem="wYY-2M-Nqx" secondAttribute="trailing" id="dxC-HM-fct"/>
+                                            <constraint firstItem="a4Y-C8-gwt" firstAttribute="centerX" secondItem="vJY-4j-IgL" secondAttribute="centerX" id="nOa-IF-Omq"/>
+                                            <constraint firstItem="5g5-Ix-JfT" firstAttribute="top" secondItem="vJY-4j-IgL" secondAttribute="top" id="oYl-TY-R2U"/>
+                                            <constraint firstAttribute="bottom" secondItem="a4Y-C8-gwt" secondAttribute="bottom" id="rpe-bB-20g"/>
+                                            <constraint firstItem="wYY-2M-Nqx" firstAttribute="top" secondItem="vJY-4j-IgL" secondAttribute="top" id="wJ2-lN-d24"/>
+                                            <constraint firstAttribute="height" constant="200" id="xb4-5x-4gl"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="WND-B2-APX" firstAttribute="width" secondItem="1jf-0c-qHo" secondAttribute="width" multiplier="0.8" id="HVK-V1-Omd"/>
+                                    <constraint firstItem="vJY-4j-IgL" firstAttribute="centerX" secondItem="1jf-0c-qHo" secondAttribute="centerX" id="JYY-Rp-lqo"/>
+                                    <constraint firstItem="vJY-4j-IgL" firstAttribute="centerY" secondItem="1jf-0c-qHo" secondAttribute="centerY" id="lht-gQ-O4r"/>
                                     <constraint firstItem="WND-B2-APX" firstAttribute="centerX" secondItem="1jf-0c-qHo" secondAttribute="centerX" id="oxN-Cn-LQI"/>
                                     <constraint firstItem="WND-B2-APX" firstAttribute="centerY" secondItem="1jf-0c-qHo" secondAttribute="centerY" id="uv2-Cl-PeV"/>
                                 </constraints>
@@ -103,7 +164,7 @@
                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RD3-zE-B90">
                                         <rect key="frame" x="0.0" y="0.0" width="390" height="84.333333333333329"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="MdB-HQ-U0k">
-                                            <rect key="frame" x="0.0" y="0.0" width="390" height="84.333333333333329"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="84"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                         <blurEffect style="regular"/>
@@ -114,7 +175,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nPk-gT-2DN" userLabel="history">
                                                 <rect key="frame" x="0.0" y="0.0" width="84.666666666666671" height="34.333333333333336"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="复制"/>
+                                                <state key="normal" title=""/>
                                                 <buttonConfiguration key="configuration" style="gray" image="list.bullet.circle.fill" catalog="system"/>
                                                 <connections>
                                                     <action selector="onActionOpenHistory:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HLk-fp-hwp"/>
@@ -123,7 +184,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MG7-Td-UaK" userLabel="export">
                                                 <rect key="frame" x="96.666666666666686" y="0.0" width="84.333333333333314" height="34.333333333333336"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="复制"/>
+                                                <state key="normal" title=""/>
                                                 <buttonConfiguration key="configuration" style="gray" image="square.and.arrow.up.fill" catalog="system"/>
                                                 <connections>
                                                     <action selector="onActionExport:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yFl-bE-EiK"/>
@@ -132,7 +193,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mSB-qj-62f" userLabel="import">
                                                 <rect key="frame" x="193" y="0.0" width="84.666666666666686" height="34.333333333333336"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="相册选择"/>
+                                                <state key="normal" title=""/>
                                                 <buttonConfiguration key="configuration" style="gray" image="photo.on.rectangle.angled" catalog="system"/>
                                                 <connections>
                                                     <action selector="onActionImport:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0ad-HP-dQ3"/>
@@ -141,7 +202,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2cj-Uz-rjd" userLabel="safari">
                                                 <rect key="frame" x="289.66666666666669" y="0.0" width="84.333333333333314" height="34.333333333333336"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="浏览器打开"/>
+                                                <state key="normal" title=""/>
                                                 <buttonConfiguration key="configuration" style="gray" image="safari.fill" catalog="system"/>
                                                 <connections>
                                                     <action selector="onActionOpenInSafari:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Cr5-3R-mdu"/>
@@ -198,12 +259,13 @@
                         <outlet property="importButton" destination="mSB-qj-62f" id="Ky8-JC-hgV"/>
                         <outlet property="loading" destination="J93-58-08A" id="akP-L8-6pR"/>
                         <outlet property="openButton" destination="2cj-Uz-rjd" id="2iX-pv-Fro"/>
+                        <outlet property="permissionView" destination="vJY-4j-IgL" id="CdW-EA-den"/>
                         <outlet property="textView" destination="9SE-j2-cyb" id="s95-dK-Fjb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="280" y="-675.35545023696682"/>
+            <point key="canvasLocation" x="166" y="-677"/>
         </scene>
         <!--History View Controller-->
         <scene sceneID="aj1-CP-XFc">
@@ -214,7 +276,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="64t-fH-MAA">
-                                <rect key="frame" x="0.0" y="91" width="390" height="511"/>
+                                <rect key="frame" x="0.0" y="47" width="390" height="555"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="p1F-SQ-qND" style="IBUITableViewCellStyleDefault" id="Ov1-QD-VnI">
                                         <rect key="frame" x="20" y="55.333332061767578" width="350" height="43.666667938232422"/>
@@ -242,23 +304,6 @@ BmNlbGw
                                     <outlet property="delegate" destination="aAl-Vf-7yz" id="AVo-1p-CfL"/>
                                 </connections>
                             </tableView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="av1-by-fgh">
-                                <rect key="frame" x="0.0" y="47" width="390" height="44"/>
-                                <items>
-                                    <navigationItem title="History" id="M5w-PK-RKh">
-                                        <barButtonItem key="leftBarButtonItem" title="Cancel" image="chevron.backward" catalog="system" id="jhd-Mo-Izs">
-                                            <connections>
-                                                <action selector="onActionDone:" destination="aAl-Vf-7yz" id="Ujr-bJ-K20"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Clear" image="xmark.circle" catalog="system" id="UqN-ED-IDR">
-                                            <connections>
-                                                <action selector="onActionClear:" destination="aAl-Vf-7yz" id="m5M-uC-qbv"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gFM-dx-DGU">
                                 <rect key="frame" x="16" y="610" width="358" height="200"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -274,14 +319,11 @@ BmNlbGw
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="gFM-dx-DGU" firstAttribute="top" secondItem="64t-fH-MAA" secondAttribute="bottom" constant="8" id="22Q-Zi-d5c"/>
-                            <constraint firstItem="64t-fH-MAA" firstAttribute="top" secondItem="av1-by-fgh" secondAttribute="bottom" id="2uG-vz-Y5q"/>
-                            <constraint firstItem="av1-by-fgh" firstAttribute="leading" secondItem="DNp-fO-RJe" secondAttribute="leading" id="GgS-nH-vA1"/>
                             <constraint firstItem="0jV-Zm-qjm" firstAttribute="trailing" secondItem="gFM-dx-DGU" secondAttribute="trailing" constant="16" id="HRi-Rf-2Tz"/>
-                            <constraint firstItem="av1-by-fgh" firstAttribute="top" secondItem="0jV-Zm-qjm" secondAttribute="top" id="PNV-8T-95H"/>
                             <constraint firstItem="gFM-dx-DGU" firstAttribute="leading" secondItem="0jV-Zm-qjm" secondAttribute="leading" constant="16" id="RQb-LS-ZtS"/>
                             <constraint firstItem="64t-fH-MAA" firstAttribute="leading" secondItem="0jV-Zm-qjm" secondAttribute="leading" id="Wdb-Z9-Bxy"/>
                             <constraint firstItem="0jV-Zm-qjm" firstAttribute="bottom" secondItem="gFM-dx-DGU" secondAttribute="bottom" id="cN8-s3-Rog"/>
-                            <constraint firstItem="0jV-Zm-qjm" firstAttribute="trailing" secondItem="av1-by-fgh" secondAttribute="trailing" id="kdS-cM-kdK"/>
+                            <constraint firstItem="64t-fH-MAA" firstAttribute="top" secondItem="0jV-Zm-qjm" secondAttribute="top" id="edy-iG-nAQ"/>
                             <constraint firstItem="0jV-Zm-qjm" firstAttribute="trailing" secondItem="64t-fH-MAA" secondAttribute="trailing" id="q1X-Jr-9EH"/>
                         </constraints>
                     </view>
@@ -326,12 +368,13 @@ BmNlbGw
         </scene>
     </scenes>
     <resources>
-        <image name="chevron.backward" catalog="system" width="97" height="128"/>
+        <image name="camera" catalog="system" width="128" height="93"/>
+        <image name="chevron.forward" catalog="system" width="97" height="128"/>
         <image name="list.bullet.circle.fill" catalog="system" width="128" height="123"/>
         <image name="photo.on.rectangle.angled" catalog="system" width="128" height="98"/>
         <image name="safari.fill" catalog="system" width="128" height="123"/>
         <image name="square.and.arrow.up.fill" catalog="system" width="115" height="128"/>
-        <image name="xmark.circle" catalog="system" width="128" height="123"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

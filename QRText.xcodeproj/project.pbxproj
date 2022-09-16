@@ -12,11 +12,12 @@
 		9B66C76C28D1C77E00C975FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B66C76B28D1C77E00C975FF /* AppDelegate.swift */; };
 		9B66C76E28D1C77E00C975FF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B66C76D28D1C77E00C975FF /* SceneDelegate.swift */; };
 		9B66C77028D1C77E00C975FF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B66C76F28D1C77E00C975FF /* MainViewController.swift */; };
-		9B66C77328D1C77E00C975FF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C77128D1C77E00C975FF /* Main.storyboard */; };
 		9B66C77528D1C78000C975FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C77428D1C78000C975FF /* Assets.xcassets */; };
-		9B66C77828D1C78000C975FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C77628D1C78000C975FF /* LaunchScreen.storyboard */; };
 		9B66C78428D1C8E000C975FF /* QRScanWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B66C78328D1C8E000C975FF /* QRScanWindowView.swift */; };
 		9B66C78628D1CA0200C975FF /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B66C78528D1CA0200C975FF /* QRCodeScannerViewController.swift */; };
+		9B888EA028D44AE100877FE4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9B888EA228D44AE100877FE4 /* InfoPlist.strings */; };
+		9B888EA928D44D7000877FE4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B888EA828D44D7000877FE4 /* LaunchScreen.storyboard */; };
+		9B888EAD28D44DFD00877FE4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B888EAF28D44DFD00877FE4 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,24 +35,25 @@
 
 /* Begin PBXFileReference section */
 		9B113E5828D415820089B363 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
-		9B113E5A28D41AE50089B363 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
-		9B113E5B28D41AE50089B363 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		9B113E5D28D41B7D0089B363 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		9B113E6128D41BCC0089B363 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9B113E6328D41BD10089B363 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		9B66C76828D1C77E00C975FF /* QRText.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QRText.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B66C76B28D1C77E00C975FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9B66C76D28D1C77E00C975FF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		9B66C76F28D1C77E00C975FF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		9B66C77228D1C77E00C975FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9B66C77428D1C78000C975FF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9B66C77728D1C78000C975FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9B66C77928D1C78000C975FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B66C78328D1C8E000C975FF /* QRScanWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanWindowView.swift; sourceTree = "<group>"; };
 		9B66C78528D1CA0200C975FF /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
 		9B695D0F28D30F7100073C48 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
 		9B695D2628D3142F00073C48 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		9B695D2828D3142F00073C48 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		9B888E9C28D44A1600877FE4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9B888EA128D44AE100877FE4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9B888EA328D44AE200877FE4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9B888EA828D44D7000877FE4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9B888EAE28D44DFD00877FE4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9B888EB128D44E0600877FE4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		9B888EB228D45FDB00877FE4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 		9B66C75F28D1C77E00C975FF = {
 			isa = PBXGroup;
 			children = (
+				9B888EB228D45FDB00877FE4 /* README.md */,
 				9B66C76A28D1C77E00C975FF /* QRText */,
 				9B695D0E28D30F7100073C48 /* Frameworks */,
 				9B66C76928D1C77E00C975FF /* Products */,
@@ -88,14 +91,15 @@
 				9B66C76B28D1C77E00C975FF /* AppDelegate.swift */,
 				9B66C76D28D1C77E00C975FF /* SceneDelegate.swift */,
 				9B66C76F28D1C77E00C975FF /* MainViewController.swift */,
-				9B66C77128D1C77E00C975FF /* Main.storyboard */,
+				9B888EAF28D44DFD00877FE4 /* Main.storyboard */,
+				9B888EA828D44D7000877FE4 /* LaunchScreen.storyboard */,
 				9B66C77428D1C78000C975FF /* Assets.xcassets */,
-				9B66C77628D1C78000C975FF /* LaunchScreen.storyboard */,
-				9B66C77928D1C78000C975FF /* Info.plist */,
+				9B888E9C28D44A1600877FE4 /* Info.plist */,
 				9B66C78328D1C8E000C975FF /* QRScanWindowView.swift */,
 				9B66C78528D1CA0200C975FF /* QRCodeScannerViewController.swift */,
 				9B113E5828D415820089B363 /* HistoryViewController.swift */,
 				9B113E6228D41BCC0089B363 /* Localizable.strings */,
+				9B888EA228D44AE100877FE4 /* InfoPlist.strings */,
 			);
 			path = QRText;
 			sourceTree = "<group>";
@@ -170,10 +174,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B66C77828D1C78000C975FF /* LaunchScreen.storyboard in Resources */,
 				9B113E6028D41BCC0089B363 /* Localizable.strings in Resources */,
+				9B888EAD28D44DFD00877FE4 /* Main.storyboard in Resources */,
 				9B66C77528D1C78000C975FF /* Assets.xcassets in Resources */,
-				9B66C77328D1C77E00C975FF /* Main.storyboard in Resources */,
+				9B888EA928D44D7000877FE4 /* LaunchScreen.storyboard in Resources */,
+				9B888EA028D44AE100877FE4 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,23 +210,22 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		9B66C77128D1C77E00C975FF /* Main.storyboard */ = {
+		9B888EA228D44AE100877FE4 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9B66C77228D1C77E00C975FF /* Base */,
-				9B113E5A28D41AE50089B363 /* zh-Hans */,
-				9B113E5D28D41B7D0089B363 /* en */,
+				9B888EA128D44AE100877FE4 /* en */,
+				9B888EA328D44AE200877FE4 /* zh-Hans */,
 			);
-			name = Main.storyboard;
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		9B66C77628D1C78000C975FF /* LaunchScreen.storyboard */ = {
+		9B888EAF28D44DFD00877FE4 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9B66C77728D1C78000C975FF /* Base */,
-				9B113E5B28D41AE50089B363 /* zh-Hans */,
+				9B888EAE28D44DFD00877FE4 /* en */,
+				9B888EB128D44E0600877FE4 /* zh-Hans */,
 			);
-			name = LaunchScreen.storyboard;
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -278,7 +282,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -333,7 +337,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -350,16 +354,19 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 34PEP7YC95;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QRText/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "使用摄像头进行二维码扫描";
+				INFOPLIST_KEY_CFBundleDisplayName = QRText;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Using camera to scam the codes";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -367,9 +374,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.renwei.QRText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -380,16 +390,19 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 34PEP7YC95;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QRText/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "使用摄像头进行二维码扫描";
+				INFOPLIST_KEY_CFBundleDisplayName = QRText;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Using camera to scam the codes";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -397,9 +410,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.renwei.QRText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

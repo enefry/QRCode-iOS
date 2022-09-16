@@ -15,8 +15,12 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     var history: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = NSLocalizedString("History", comment: "")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         history = UserDefaults.standard.stringArray(forKey: HistoryKey) ?? []
+        if history.count > 0 {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: self, action: #selector(onActionClear))
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
