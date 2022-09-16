@@ -1,0 +1,21 @@
+
+/* Class = "UIButton"; normalTitle = "浏览器打开"; ObjectID = "2cj-Uz-rjd"; */
+"2cj-Uz-rjd.normalTitle" = "Safari";
+
+/* Class = "UINavigationItem"; title = "History"; ObjectID = "M5w-PK-RKh"; */
+"M5w-PK-RKh.title" = "历史";
+
+/* Class = "UIButton"; normalTitle = "复制"; ObjectID = "MG7-Td-UaK"; */
+"MG7-Td-UaK.normalTitle" = "导出";
+
+/* Class = "UIBarButtonItem"; title = "clear"; ObjectID = "UqN-ED-IDR"; */
+"UqN-ED-IDR.title" = "clear";
+
+/* Class = "UIButton"; normalTitle = "相册选择"; ObjectID = "mSB-qj-62f"; */
+"mSB-qj-62f.normalTitle" = "相册";
+
+/* Class = "UIButton"; normalTitle = "复制"; ObjectID = "nPk-gT-2DN"; */
+"nPk-gT-2DN.normalTitle" = "导出";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "p1F-SQ-qND"; */
+"p1F-SQ-qND.text" = "";

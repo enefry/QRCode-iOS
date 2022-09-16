@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  QRText
+
+  Created by 陈任伟 on 2022/9/16.
+  
+*/
+
+"History" ="History";
+"Clear" ="Clear";
+"ClearAllHistory" ="Clean All History";
+"ClearCannotResue" = "Cannot resume after cleaning";
+"Cancel"="Cancel";
+"Sure"="Sure";
+"Share"="Share";

@@ -16,13 +16,16 @@ func generateRandmoColor() -> UIColor {
     return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
 }
 
-class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
     lazy var session: AVCaptureSession = AVCaptureSession() // 输入输出的中间桥梁
+    var captureDevices: AVCaptureDevice?
 
     @IBOutlet var cropMaskView: UIView?
     @IBOutlet var contentView: UIView?
+    @IBOutlet var flashlight: UIButton!
     var previewLayer: CALayer?
     var metadaOutput: AVCaptureMetadataOutput?
+    var dataOutput: AVCaptureVideoDataOutput?
 
     lazy var scanWindow: QRScanWindowView = {
         let container = contentView ?? self.view!
@@ -96,7 +99,7 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
     /**
      * 扫描回调
      */
-    var resultBlock: ((QRCodeScannerViewController, String) -> Bool)?
+    var resultBlock: ((QRCodeScannerViewController, [String]) -> Bool)?
 
     /**
      * 开始扫描
@@ -134,9 +137,9 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
      * @param object 扫描输出
      * @return 是否停止 YES 停止, NO 继续
      */
-    func onScanResult(object: AVMetadataMachineReadableCodeObject) -> Bool {
-        if let block = resultBlock, let text = object.stringValue {
-            return block(self, text)
+    func onScanResult(objects: [AVMetadataMachineReadableCodeObject]) -> Bool {
+        if let block = resultBlock {
+            return block(self, objects.map({ t in t.stringValue ?? "" }))
         }
         return false
     }
@@ -146,24 +149,110 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
         scanWindow.setNeedsLayout()
         // 获取摄像设备
         // 创建输入流
-        if let devices = AVCaptureDevice.default(for: AVMediaType.video),
+        if let crop = cropMaskView,
+           let container = contentView ?? crop.superview ?? view,
+           let devices = AVCaptureDevice.default(for: AVMediaType.video),
            let input = try? AVCaptureDeviceInput(device: devices) {
+            captureDevices = devices
             let output = AVCaptureMetadataOutput()
             output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            let crop = cropMaskView!
-            let container = contentView ?? crop.superview ?? view!
-
             output.rectOfInterest = getScanCrop(rect: crop.frame, readerViewBounds: container.frame)
+            let dataOutput = AVCaptureVideoDataOutput()
+            dataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.main)
             session.canSetSessionPreset(AVCaptureSession.Preset.high)
             session.addInput(input)
             session.addOutput(output)
-            output.metadataObjectTypes = [AVMetadataObject.ObjectType.qr, AVMetadataObject.ObjectType.codabar, AVMetadataObject.ObjectType.code128]
+            session.addOutput(dataOutput)
+            
+            let availableMetadataObjectTypes = output.availableMetadataObjectTypes
+            let filterTypes = [AVMetadataObject.ObjectType.aztec,
+                               AVMetadataObject.ObjectType.codabar,
+                               AVMetadataObject.ObjectType.code128,
+                               AVMetadataObject.ObjectType.code39,
+                               AVMetadataObject.ObjectType.code39Mod43,
+                               AVMetadataObject.ObjectType.code93,
+                               AVMetadataObject.ObjectType.dataMatrix,
+                               AVMetadataObject.ObjectType.ean13,
+                               AVMetadataObject.ObjectType.ean8,
+                               AVMetadataObject.ObjectType.gs1DataBar,
+                               AVMetadataObject.ObjectType.gs1DataBarExpanded,
+                               AVMetadataObject.ObjectType.gs1DataBarLimited,
+                               AVMetadataObject.ObjectType.interleaved2of5,
+                               AVMetadataObject.ObjectType.itf14,
+                               AVMetadataObject.ObjectType.microPDF417,
+                               AVMetadataObject.ObjectType.microQR,
+                               AVMetadataObject.ObjectType.pdf417,
+                               AVMetadataObject.ObjectType.qr].filter({ type in
+                availableMetadataObjectTypes.contains(type)
+            })
+            output.metadataObjectTypes = filterTypes
+            
             let layer = AVCaptureVideoPreviewLayer(session: session)
             layer.videoGravity = .resizeAspectFill
             layer.frame = container.bounds
+
             container.layer.insertSublayer(layer, at: 0)
             previewLayer = layer
             metadaOutput = output
+            let frame = crop.bounds
+            let width = {
+                let fw = (frame.width * 0.4)
+                let fh = (frame.height * 0.4)
+                var width = fw
+                if fw < fh {
+                    width = fh
+                }
+                if width > 120 {
+                    width = 120
+                } else if width < 40 {
+                    width = 40
+                }
+                return width
+            }()
+            if flashlight == nil {
+                let button = UIButton(type: .custom)
+                button.translatesAutoresizingMaskIntoConstraints = false
+                button.backgroundColor = UIColor.clear
+                let config = UIImage.SymbolConfiguration(pointSize: 36)
+                button.setImage(UIImage(systemName: "flashlight.off.fill")?.applyingSymbolConfiguration(config), for: UIControl.State.normal)
+                button.setImage(UIImage(systemName: "flashlight.on.fill")?.applyingSymbolConfiguration(config), for: UIControl.State.selected)
+                button.isSelected = false
+                button.addTarget(self, action: #selector(flashlightStatueChagne), for: UIControl.Event.touchUpInside)
+                container.addSubview(button)
+                NSLayoutConstraint.activate([
+                    button.centerXAnchor.constraint(equalTo: crop.centerXAnchor),
+                    button.centerYAnchor.constraint(equalTo: crop.centerYAnchor),
+                    button.widthAnchor.constraint(equalToConstant: width),
+                    button.heightAnchor.constraint(equalToConstant: width),
+                ])
+                flashlight = button
+            }
+            flashlight.isHidden = true
+        }
+    }
+
+    @IBAction func flashlightStatueChagne() {
+        flashlight.isSelected = !flashlight.isSelected
+        turnTorchOn(isOn: flashlight.isSelected)
+    }
+
+    func turnTorchOn(isOn: Bool) {
+        if let captureDevices = captureDevices,
+           captureDevices.hasTorch,
+           captureDevices.hasFlash {
+            do {
+                try! captureDevices.lockForConfiguration()
+
+                if isOn {
+                    captureDevices.torchMode = .on
+                    captureDevices.flashMode = .on
+                } else {
+                    captureDevices.flashMode = .off
+                    captureDevices.torchMode = .off
+                }
+                captureDevices.unlockForConfiguration()
+            } catch {
+            }
         }
     }
 
@@ -185,6 +274,11 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
         }
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        scanWindow.stopScanAnimation()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if let container = (contentView ?? cropMaskView?.superview ?? view) {
@@ -197,9 +291,32 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
     }
 
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        if let data = metadataObjects.first as? AVMetadataMachineReadableCodeObject,
-           onScanResult(object: data) {
-            stop()
+        
+        print("扫描到:\(metadataObjects)")
+        var results: [AVMetadataMachineReadableCodeObject] = []
+        for obj in metadataObjects {
+            if let data = obj as? AVMetadataMachineReadableCodeObject,
+               let _ = data.stringValue {
+                results.append(data)
+            }
+        }
+        if results.count > 0 {
+            if onScanResult(objects: results) {
+                stop()
+            }
+        }
+    }
+
+    let brightnessThresholdValue = -0.2
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        var brightness: Double?
+        if let metadata: NSDictionary = (CMCopyDictionaryOfAttachments(allocator: nil, target: sampleBuffer, attachmentMode: kCMAttachmentMode_ShouldPropagate) as NSDictionary?),
+           let exif = metadata[kCGImagePropertyExifDictionary] as? NSDictionary,
+           let brightnessValue = exif[kCGImagePropertyExifBrightnessValue] as? NSNumber {
+            brightness = brightnessValue.doubleValue
+        }
+        if let brightness = brightness {
+            flashlight.isHidden = !(flashlight.isSelected || brightness < brightnessThresholdValue)
         }
     }
 }

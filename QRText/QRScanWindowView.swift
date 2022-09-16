@@ -91,7 +91,6 @@ class QRScanWindowView: UIView {
     }
 
     override func draw(_ rect: CGRect) {
-//        super.draw(rect)
         if let ctx = UIGraphicsGetCurrentContext(),
            let excludePath = excludePath {
             ctx.saveGState()
