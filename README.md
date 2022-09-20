@@ -9,5 +9,8 @@ Simple,Small,Safe,Privacy QrCode Scaner
 
 
 
+> contact information
+```
 Submit an issue : https://github.com/enefry/QRCode-iOS/issues
 email : enefry@live.cn
+```
