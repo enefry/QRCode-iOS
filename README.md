@@ -7,3 +7,7 @@ Simple,Small,Safe,Privacy QrCode Scaner
 3. Safe:   no any exten action
 4. Privacy:no any network report
 
+
+
+Submit an issue : https://github.com/enefry/QRCode-iOS/issues
+email : enefry@live.cn
