@@ -1,6 +1,6 @@
 # QRCode-iOS
 
-Simple,Small,Safe,Privacy QrCode Scaner
+## Simple,Small,Safe,Privacy QrCode Scaner
 
 1. Simple: system api only
 2. Small:  500KB (installed)
@@ -9,8 +9,7 @@ Simple,Small,Safe,Privacy QrCode Scaner
 
 
 
-> contact information
-```
-Submit an issue : https://github.com/enefry/QRCode-iOS/issues
-email : enefry@live.cn
-```
+## Contact information
+1. Submit an issue : https://github.com/enefry/QRCode-iOS/issues
+2. email : enefry@live.cn
+
