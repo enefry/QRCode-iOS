@@ -18,6 +18,7 @@
 		9B888EA028D44AE100877FE4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9B888EA228D44AE100877FE4 /* InfoPlist.strings */; };
 		9B888EA928D44D7000877FE4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B888EA828D44D7000877FE4 /* LaunchScreen.storyboard */; };
 		9B888EAD28D44DFD00877FE4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B888EAF28D44DFD00877FE4 /* Main.storyboard */; };
+		9BA322E42FA0461D00EAC4AD /* qrcode.icon in Resources */ = {isa = PBXBuildFile; fileRef = 9BA322E32FA0461D00EAC4AD /* qrcode.icon */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -54,6 +55,7 @@
 		9B888EAE28D44DFD00877FE4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9B888EB128D44E0600877FE4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		9B888EB228D45FDB00877FE4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9BA322E32FA0461D00EAC4AD /* qrcode.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = qrcode.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 		9B66C76A28D1C77E00C975FF /* QRText */ = {
 			isa = PBXGroup;
 			children = (
+				9BA322E32FA0461D00EAC4AD /* qrcode.icon */,
 				9B66C76B28D1C77E00C975FF /* AppDelegate.swift */,
 				9B66C76D28D1C77E00C975FF /* SceneDelegate.swift */,
 				9B66C76F28D1C77E00C975FF /* MainViewController.swift */,
@@ -174,6 +177,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BA322E42FA0461D00EAC4AD /* qrcode.icon in Resources */,
 				9B113E6028D41BCC0089B363 /* Localizable.strings in Resources */,
 				9B888EAD28D44DFD00877FE4 /* Main.storyboard in Resources */,
 				9B66C77528D1C78000C975FF /* Assets.xcassets in Resources */,
@@ -354,7 +358,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 34PEP7YC95;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QRText/Info.plist;
@@ -371,7 +375,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.renwei.QRText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -390,7 +394,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 34PEP7YC95;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QRText/Info.plist;
@@ -407,7 +411,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.renwei.QRText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

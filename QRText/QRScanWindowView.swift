@@ -53,27 +53,25 @@ class QRScanWindowView: UIView {
         let moveHeight = (excludePath?.size ?? size).height - size.height
         let destPoint = CGPoint(x: point.x, y: point.y + moveHeight)
         line?.frame = CGRect(x: point.x, y: point.y, width: size.width, height: size.height)
-        let autoMirror = scanLineAutoMirror
-        let scanLineView = line
-        UIView.animateKeyframes(withDuration: moveHeight / 50, delay: 0, options: UIView.KeyframeAnimationOptions(rawValue: UIView.KeyframeAnimationOptions.repeat.rawValue | UIView.AnimationOptions.curveEaseInOut.rawValue)) {
-            if autoMirror {
-                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.01) {
-                    scanLineView?.transform = CGAffineTransformMakeScale(1.0, 1.0)
-                }
-            }
-            UIView.addKeyframe(withRelativeStartTime: 0.01, relativeDuration: 0.5) {
-                scanLineView?.frame = CGRect(x: destPoint.x, y: destPoint.y, width: size.width, height: size.height)
-            }
 
-            if autoMirror {
-                UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.01) {
-                    scanLineView?.transform = CGAffineTransformMakeScale(1.0, -1.0)
-                }
-            }
-            UIView.addKeyframe(withRelativeStartTime: 0.51, relativeDuration: 0.49) {
-                scanLineView?.frame = CGRect(x: point.x, y: point.y, width: size.width, height: size.height)
-            }
-        } completion: { _ in
+        guard let scanLineView = line, moveHeight > 0 else { return }
+
+        let duration = moveHeight / 150
+
+        // 位置动画：单程向下 + autoreverse 自动返程
+        UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseInOut, .autoreverse, .repeat]) {
+            scanLineView.frame = CGRect(x: destPoint.x, y: destPoint.y, width: size.width, height: size.height)
+        }
+
+        // 镜像动画：与位置动画周期同步（完整往返 = duration * 2）
+        if scanLineAutoMirror {
+            let mirrorAnim = CAKeyframeAnimation(keyPath: "transform.scale.y")
+            mirrorAnim.values = [1, 1, -1, -1]
+            mirrorAnim.keyTimes = [0, 0.5, 0.5, 1]
+            mirrorAnim.duration = duration * 2
+            mirrorAnim.repeatCount = .infinity
+            mirrorAnim.calculationMode = .discrete
+            scanLineView.layer.add(mirrorAnim, forKey: "mirror")
         }
     }
 
