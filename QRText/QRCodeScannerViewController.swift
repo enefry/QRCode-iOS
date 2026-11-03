@@ -24,9 +24,13 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
     @IBOutlet var permissionView: UIView?
     @IBOutlet var contentView: UIView?
     @IBOutlet var flashlight: UIButton!
-    var previewLayer: CALayer?
+    var previewLayer: AVCaptureVideoPreviewLayer?
     var metadaOutput: AVCaptureMetadataOutput?
     var dataOutput: AVCaptureVideoDataOutput?
+    private var rotationCoordinator: AnyObject?
+    private var rotationObservation: NSKeyValueObservation?
+    private var deviceOrientationObserver: NSObjectProtocol?
+    private var lastVideoOrientation: AVCaptureVideoOrientation = .portrait
 
     lazy var scanWindow: QRScanWindowView = {
         let container = contentView ?? self.view!
@@ -42,11 +46,16 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
         view.backgroundColor = UIColor.clear
         view.cornerColor = cornerColor ?? UIColor.clear
         view.scanLine = scanLine
+        view.scanLineAutoMirror = scanLineAutoMirror
         view.excludePath = cropMaskView?.frame
         return view
     }()
 
     deinit {
+        if let observer = deviceOrientationObserver {
+            NotificationCenter.default.removeObserver(observer)
+            UIDevice.current.endGeneratingDeviceOrientationNotifications()
+        }
     }
 
     func setCornerColor(cornerColor: UIColor) {
@@ -120,9 +129,9 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
      * 停止扫描
      */
     func stop() {
+        scanWindow.stopScanAnimation()
         if session.isRunning {
             session.stopRunning()
-            scanWindow.stopScanAnimation()
         }
     }
 
@@ -196,10 +205,11 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
                 captureDevices = devices
                 let output = AVCaptureMetadataOutput()
                 output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-                output.rectOfInterest = getScanCrop(rect: crop.frame, readerViewBounds: container.frame)
                 let dataOutput = AVCaptureVideoDataOutput()
                 dataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.main)
-                session.canSetSessionPreset(AVCaptureSession.Preset.high)
+                if session.canSetSessionPreset(.high) {
+                    session.sessionPreset = .high
+                }
                 session.addInput(input)
                 session.addOutput(output)
                 session.addOutput(dataOutput)
@@ -235,9 +245,19 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
                 layer.videoGravity = .resizeAspectFill
                 layer.frame = container.bounds
 
+                container.clipsToBounds = true
                 container.layer.insertSublayer(layer, at: 0)
                 previewLayer = layer
                 metadaOutput = output
+                if #available(iOS 17.0, *) {
+                    let coordinator = AVCaptureDevice.RotationCoordinator(device: devices, previewLayer: layer)
+                    rotationCoordinator = coordinator
+                    // AVFoundation delivers these observations on the main queue.
+                    rotationObservation = coordinator.observe(\.videoRotationAngleForHorizonLevelPreview,
+                                                               options: [.initial, .new]) { [weak self] _, _ in
+                        self?.updateScaner()
+                    }
+                }
                 setupFlashlightButton(crop, container)
             }
             updateScaner()
@@ -268,15 +288,19 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
         }
     }
 
-    // MARK: - 获取扫描区域的比例关系
-
-    func getScanCrop(rect: CGRect, readerViewBounds: CGRect) -> CGRect {
-        let x, y, width, height: CGFloat
-        y = CGRectGetMinX(rect) / CGRectGetWidth(readerViewBounds)
-        x = CGRectGetMinY(rect) / CGRectGetHeight(readerViewBounds)
-        height = CGRectGetWidth(rect) / CGRectGetWidth(readerViewBounds)
-        width = CGRectGetHeight(rect) / CGRectGetHeight(readerViewBounds)
-        return CGRectMake(x, y, width, height)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if #available(iOS 17.0, *) {
+            // RotationCoordinator observes camera pose and preview layer geometry.
+        } else if deviceOrientationObserver == nil {
+            UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+            deviceOrientationObserver = NotificationCenter.default.addObserver(
+                forName: UIDevice.orientationDidChangeNotification, object: nil, queue: .main
+            ) { [weak self] _ in
+                self?.updateScaner()
+            }
+        }
+        updateScaner()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -289,29 +313,64 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         scanWindow.stopScanAnimation()
+        if let observer = deviceOrientationObserver {
+            NotificationCenter.default.removeObserver(observer)
+            deviceOrientationObserver = nil
+            UIDevice.current.endGeneratingDeviceOrientationNotifications()
+        }
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.cropMaskView?.setNeedsLayout()
-        self.cropMaskView?.superview?.layoutIfNeeded()
         updateScaner()
     }
 
-    override func viewLayoutMarginsDidChange() {
-        super.viewLayoutMarginsDidChange()
-        
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { _ in
+            self.updateScaner()
+        }, completion: { _ in
+            self.updateScaner()
+        })
     }
 
-    func updateScaner(callerLine: Int = #line) {
-        if let container = (contentView ?? cropMaskView?.superview ?? view) {
-            previewLayer?.frame = container.bounds
-            let crop = cropMaskView!.frame
-            let scanCrop = getScanCrop(rect: crop, readerViewBounds: container.frame)
-            metadaOutput?.rectOfInterest = scanCrop
-            scanWindow.excludePath = crop
-            print(">\(callerLine) frame:\(container.bounds) crop:\(crop) scancrop:\(scanCrop)")
+    func updateScaner() {
+        guard let container = contentView ?? cropMaskView?.superview ?? view,
+              let cropMaskView = cropMaskView else { return }
+
+        // Camera pose can change while the app's interface stays portrait.
+        // The coordinator also accounts for cameras with a different native
+        // sensor orientation and the preview layer's orientation on screen.
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        previewLayer?.frame = container.bounds
+        if let connection = previewLayer?.connection {
+            if #available(iOS 17.0, *),
+               let coordinator = rotationCoordinator as? AVCaptureDevice.RotationCoordinator {
+                let angle = coordinator.videoRotationAngleForHorizonLevelPreview
+                if connection.isVideoRotationAngleSupported(angle) {
+                    connection.videoRotationAngle = angle
+                }
+            } else if connection.isVideoOrientationSupported {
+                switch UIDevice.current.orientation {
+                case .portrait: lastVideoOrientation = .portrait
+                case .portraitUpsideDown: lastVideoOrientation = .portraitUpsideDown
+                // Device and capture orientations use opposite landscape names.
+                case .landscapeLeft: lastVideoOrientation = .landscapeRight
+                case .landscapeRight: lastVideoOrientation = .landscapeLeft
+                default: break // Preserve the last valid pose when flat/unknown.
+                }
+                connection.videoOrientation = lastVideoOrientation
+            }
         }
+        CATransaction.commit()
+
+        let crop = cropMaskView.convert(cropMaskView.bounds, to: container)
+        if let previewLayer = previewLayer, !container.bounds.isEmpty {
+            // Account for orientation and the cropping introduced by aspect fill.
+            metadaOutput?.rectOfInterest = previewLayer.metadataOutputRectConverted(fromLayerRect: crop)
+        }
+        scanWindow.excludePath = cropMaskView.convert(cropMaskView.bounds, to: scanWindow)
     }
 
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {

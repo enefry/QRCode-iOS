@@ -26,6 +26,7 @@ class QRScanWindowView: UIView {
     var line: UIView?
     var excludePath: CGRect? {
         didSet {
+            guard excludePath != oldValue else { return }
             setNeedsLayout()
             setNeedsDisplay()
             restartScanAnimationIfNeed()
@@ -33,6 +34,7 @@ class QRScanWindowView: UIView {
     }
 
     func startScanAnimation() {
+        guard !_animating else { return }
         stopScanAnimation()
         _animating = true
         var size = excludePath?.size ?? bounds.size
@@ -50,18 +52,22 @@ class QRScanWindowView: UIView {
             addSubview(iv)
             line = iv
         }
-        let moveHeight = (excludePath?.size ?? size).height - size.height
-        let destPoint = CGPoint(x: point.x, y: point.y + moveHeight)
-        line?.frame = CGRect(x: point.x, y: point.y, width: size.width, height: size.height)
+        let moveHeight = (excludePath?.height ?? bounds.height) - size.height
+        line?.frame = CGRect(origin: point, size: size)
 
         guard let scanLineView = line, moveHeight > 0 else { return }
 
-        let duration = moveHeight / 150
-
-        // 位置动画：单程向下 + autoreverse 自动返程
-        UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseInOut, .autoreverse, .repeat]) {
-            scanLineView.frame = CGRect(x: destPoint.x, y: destPoint.y, width: size.width, height: size.height)
-        }
+        let duration = CFTimeInterval(moveHeight / 150)
+        // A keyed layer animation has its own timing, independent of UIKit's
+        // layout/rotation animation context, and cannot accumulate on restart.
+        let movement = CABasicAnimation(keyPath: "transform.translation.y")
+        movement.fromValue = 0
+        movement.toValue = moveHeight
+        movement.duration = duration
+        movement.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        movement.autoreverses = true
+        movement.repeatCount = .infinity
+        scanLineView.layer.add(movement, forKey: "scanMovement")
 
         // 镜像动画：与位置动画周期同步（完整往返 = duration * 2）
         if scanLineAutoMirror {
@@ -84,7 +90,15 @@ class QRScanWindowView: UIView {
 
     func restartScanAnimationIfNeed() {
         if _animating {
+            stopScanAnimation()
             startScanAnimation()
+        }
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if excludePath == nil {
+            restartScanAnimationIfNeed()
         }
     }
 

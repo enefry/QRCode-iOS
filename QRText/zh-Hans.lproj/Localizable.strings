@@ -13,3 +13,8 @@
 "Cancel"="取消";
 "Sure"="确认";
 "Share"="分享";
+"ShowQRCode"="显示二维码";
+"QRCodeUnavailable"="无法生成二维码";
+"QRCodeTooLong"="这条记录的内容过长，无法放入一个二维码。";
+"Copy"="复制";
+"Copied"="已复制";

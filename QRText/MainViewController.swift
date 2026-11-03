@@ -41,6 +41,7 @@ class MainViewController: QRCodeScannerViewController, PHPickerViewControllerDel
                 self.exportButton.isEnabled = text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count > 0
                 self.openButton.isEnabled = text.hasPrefix("http://") || text.hasPrefix("https://")
                 self.textView.text = text
+                self.textView.isHidden = text.isEmpty
                 self.appendHistory(text: text)
             }
         }.store(in: &events)

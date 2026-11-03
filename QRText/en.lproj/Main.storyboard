@@ -141,18 +141,20 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="WND-B2-APX" firstAttribute="width" secondItem="1jf-0c-qHo" secondAttribute="width" multiplier="0.8" id="HVK-V1-Omd"/>
+                                    <constraint firstItem="WND-B2-APX" firstAttribute="width" secondItem="1jf-0c-qHo" secondAttribute="width" multiplier="0.8" priority="750" id="HVK-V1-Omd"/>
+                                    <constraint firstItem="WND-B2-APX" firstAttribute="width" relation="lessThanOrEqual" secondItem="1jf-0c-qHo" secondAttribute="width" multiplier="0.8" id="scan-width-limit"/>
+                                    <constraint firstItem="WND-B2-APX" firstAttribute="height" relation="lessThanOrEqual" secondItem="1jf-0c-qHo" secondAttribute="height" multiplier="0.8" id="scan-height-limit"/>
                                     <constraint firstItem="vJY-4j-IgL" firstAttribute="centerX" secondItem="1jf-0c-qHo" secondAttribute="centerX" id="JYY-Rp-lqo"/>
                                     <constraint firstItem="vJY-4j-IgL" firstAttribute="centerY" secondItem="1jf-0c-qHo" secondAttribute="centerY" id="lht-gQ-O4r"/>
                                     <constraint firstItem="WND-B2-APX" firstAttribute="centerX" secondItem="1jf-0c-qHo" secondAttribute="centerX" id="oxN-Cn-LQI"/>
-                                    <constraint firstItem="WND-B2-APX" firstAttribute="centerY" secondItem="1jf-0c-qHo" secondAttribute="centerY" id="uv2-Cl-PeV"/>
+                                    <constraint firstItem="WND-B2-APX" firstAttribute="centerY" secondItem="1jf-0c-qHo" secondAttribute="centerY" priority="500" id="uv2-Cl-PeV"/>
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9SE-j2-cyb">
                                 <rect key="frame" x="8" y="644" width="374" height="200"/>
                                 <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="VvD-Ct-wpi"/>
+                                    <constraint firstAttribute="height" constant="200" priority="750" id="VvD-Ct-wpi"/>
                                 </constraints>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -227,15 +229,18 @@
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="tJ3-7U-Vcm" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="184-P9-1L0"/>
+                            <constraint firstItem="WND-B2-APX" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="scan-safe-top"/>
+                            <constraint firstItem="WND-B2-APX" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="5sO-tU-XJ3" secondAttribute="top" constant="-8" id="scan-toolbar-bottom"/>
+                            <constraint firstItem="9SE-j2-cyb" firstAttribute="height" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.25" id="result-height-limit"/>
                             <constraint firstItem="9SE-j2-cyb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="6G0-Wa-l4j"/>
-                            <constraint firstItem="1jf-0c-qHo" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-8" id="7dE-iN-1vr"/>
-                            <constraint firstItem="1jf-0c-qHo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="EDh-iK-dFu"/>
-                            <constraint firstItem="1jf-0c-qHo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="EGg-Tw-bpz"/>
+                            <constraint firstItem="1jf-0c-qHo" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="7dE-iN-1vr"/>
+                            <constraint firstItem="1jf-0c-qHo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="EDh-iK-dFu"/>
+                            <constraint firstItem="1jf-0c-qHo" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="EGg-Tw-bpz"/>
                             <constraint firstItem="tJ3-7U-Vcm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="X4M-3p-5Si"/>
-                            <constraint firstItem="9SE-j2-cyb" firstAttribute="top" secondItem="1jf-0c-qHo" secondAttribute="bottom" constant="8" id="Zeh-pR-Kbo"/>
+                            <constraint firstItem="1jf-0c-qHo" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="Zeh-pR-Kbo"/>
                             <constraint firstItem="5sO-tU-XJ3" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="auf-4L-OA3"/>
                             <constraint firstItem="tJ3-7U-Vcm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="c3i-vv-ZWx"/>
-                            <constraint firstItem="9SE-j2-cyb" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="cu2-Su-Dq1"/>
+                            <constraint firstItem="9SE-j2-cyb" firstAttribute="bottom" secondItem="5sO-tU-XJ3" secondAttribute="top" constant="-8" id="cu2-Su-Dq1"/>
                             <constraint firstItem="9SE-j2-cyb" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-8" id="hFy-fL-AGz"/>
                             <constraint firstItem="5sO-tU-XJ3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qM4-pz-JBb"/>
                             <constraint firstItem="BhM-aS-v0k" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-8" id="vqH-um-SJt"/>

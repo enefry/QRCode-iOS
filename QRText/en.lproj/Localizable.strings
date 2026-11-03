@@ -13,3 +13,8 @@
 "Cancel"="Cancel";
 "Sure"="Sure";
 "Share"="Share";
+"ShowQRCode"="Show QR Code";
+"QRCodeUnavailable"="Unable to Generate QR Code";
+"QRCodeTooLong"="This record contains too much text for a single QR code.";
+"Copy"="Copy";
+"Copied"="Copied";
