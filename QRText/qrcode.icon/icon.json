@@ -6,11 +6,11 @@
     {
       "layers" : [
         {
-          "blend-mode" : "soft-light",
+          "blend-mode" : "normal",
           "fill-specializations" : [
             {
               "value" : {
-                "solid" : "extended-gray:0.25000,1.00000"
+                "automatic-gradient" : "extended-gray:0.00000,1.00000"
               }
             },
             {
@@ -28,7 +28,7 @@
           ],
           "glass-specializations" : [
             {
-              "value" : false
+              "value" : true
             },
             {
               "appearance" : "dark",
